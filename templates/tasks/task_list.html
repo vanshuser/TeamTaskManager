@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h1 class="text-white">
+        Tasks
+    </h1>
+
+{% if request.user.role == 'ADMIN' %}
+
+<a href="/tasks/create/"
+class="btn btn-modern">
+
+    + New Task
+
+</a>
+
+{% endif %}
+</div>
+
+<div class="glass-card p-4">
+
+    <table class="table table-dark table-hover align-middle">
+
+        <thead>
+
+            <tr>
+                <th>Title</th>
+                <th>Project</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for task in tasks %}
+
+            <tr>
+
+                <td>{{ task.title }}</td>
+
+                <td>{{ task.project }}</td>
+
+                <td>{{ task.assigned_to }}</td>
+
+                <td>
+
+    {% if task.status == 'DONE' %}
+
+        <span class="badge bg-success">
+            {{ task.status }}
+        </span>
+
+    {% elif task.status == 'IN_PROGRESS' %}
+
+        <span class="badge bg-warning text-dark">
+            {{ task.status }}
+        </span>
+
+    {% else %}
+
+        <span class="badge bg-danger">
+            {{ task.status }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+<td>
+
+    {% if task.priority == 'HIGH' %}
+
+        <span class="badge bg-danger">
+            {{ task.priority }}
+        </span>
+
+    {% elif task.priority == 'MEDIUM' %}
+
+        <span class="badge bg-warning text-dark">
+            {{ task.priority }}
+        </span>
+
+    {% else %}
+
+        <span class="badge bg-info">
+            {{ task.priority }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+                <td>{{ task.deadline }}</td>
+                <td>
+
+    <a href="/tasks/edit/{{ task.id }}/"
+    class="btn btn-sm btn-warning">
+
+        Edit
+
+    </a>
+
+    <a href="/tasks/delete/{{ task.id }}/"
+    class="btn btn-sm btn-danger">
+
+        Delete
+
+    </a>
+
+</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
