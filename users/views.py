@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 
 from .forms import SignupForm
+from django.contrib.auth.decorators import login_required
 
 
 def signup_view(request):
@@ -45,7 +46,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-
+@login_required
 def dashboard(request):
 
     total_projects = Project.objects.count()
@@ -63,12 +64,14 @@ def dashboard(request):
     deadline__lt=now().date()
     ).exclude(status='DONE').count()
 
+    recent_tasks = Task.objects.order_by('-id')[:5]
     context = {
         'total_projects': total_projects,
         'total_tasks': total_tasks,
         'completed_tasks': completed_tasks,
         'pending_tasks': pending_tasks,
         'overdue_tasks': overdue_tasks,
+        'recent_tasks': recent_tasks,
     }
 
     return render(

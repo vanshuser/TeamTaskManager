@@ -1,9 +1,11 @@
 from django import forms
 from .models import Task
-
+from django.utils.timezone import now
 
 class TaskForm(forms.ModelForm):
 
+
+    
     class Meta:
         model = Task
 
@@ -16,7 +18,21 @@ class TaskForm(forms.ModelForm):
             'status',
             'priority'
         ]
-
         widgets = {
-            'deadline': forms.DateInput(attrs={'type': 'date'})
-        }
+    'deadline': forms.DateInput(
+        attrs={'type': 'date'}
+    )
+}
+
+    def clean_deadline(self):
+
+            deadline = self.cleaned_data['deadline']
+
+            if deadline < now().date():
+
+                raise forms.ValidationError(
+            "Deadline cannot be in the past."
+        )
+
+            return deadline
+

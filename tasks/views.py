@@ -6,8 +6,9 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .forms import TaskForm
 from .models import Task
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def task_list(request):
 
     tasks = Task.objects.all()
@@ -18,7 +19,7 @@ def task_list(request):
         {'tasks': tasks}
     )
 
-
+@login_required
 def create_task(request):
 
     if request.user.role != 'ADMIN':
@@ -43,6 +44,7 @@ def create_task(request):
         'tasks/create_task.html',
         {'form': form}
     )
+@login_required
 def edit_task(request, task_id):
 
     task = get_object_or_404(Task, id=task_id)
@@ -67,7 +69,7 @@ def edit_task(request, task_id):
         {'form': form}
     )
 
-
+@login_required
 def delete_task(request, task_id):
 
     task = get_object_or_404(Task, id=task_id)
