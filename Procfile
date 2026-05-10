@@ -1,1 +1,1 @@
-web: gunicorn taskmanager.wsgi
+web: gunicorn taskmanager.wsgi --bind 0.0.0.0:$PORT
