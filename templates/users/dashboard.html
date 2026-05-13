@@ -6,13 +6,13 @@
 
     <div class="col-12">
 
-        <div class="glass-card p-5 mb-4">
+        <div class="glass-card p-3 p-md-5 mb-4">
 
-            <h1 class="main-title text-start">
+            <h1 class="main-title text-centre text-md-start">
                 Welcome, {{ request.user.username }}
             </h1>
 
-            <p class="sub-title text-start">
+            <p class="sub-title text-centre text-md-start">
                 Role:
                 <span class="fw-bold text-warning">
                     {{ request.user.role }}
@@ -104,15 +104,14 @@
     <div class="col-12">
 
         <div class="glass-card p-4">
-
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-4">
 
                 <h3>
                     Recent Tasks
                 </h3>
 
                 <a href="/projects/"
-                   class="btn btn-modern">
+                   class="btn btn-modern w-100 w-md-auto">
 
                     View Projects
 
