@@ -8,21 +8,7 @@ from django.http import HttpResponse
 
 from .forms import SignupForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
-
-def create_admin(request):
-    User = get_user_model()
-
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser(
-            username='admin',
-            email='admin@gmail.com',
-            password='admin123'
-        )
-        return HttpResponse("Superuser created successfully")
-    else:
-        return HttpResponse("Superuser already exists")
-
+    
 def signup_view(request):
 
     if request.method == 'POST':
